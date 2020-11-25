@@ -19,23 +19,21 @@
 						<div class="card shadow mb-4">
 							<div class="card-body">
 								<div class="table-responsive">
-									<table class="table table-bordered" id="postListDT">
+									<table class="table table-bordered w-100" style="table-layout: fixed;" id="postListDT">
 										<thead>
 											<tr>
-												<th style="width: 10%" th:text="${bean.number}"></th>
-												<th style="width: 50%" th:text="${bean.postTitle}"></th>
+												<th style="width: 70%" th:text="${bean.postTitle}"></th>
 												<th style="width: 20%" th:text="${bean.createdUser}"></th>
-												<th style="width: 10%" th:text="${bean.viewCount}"></th>
 												<th style="width: 10%" th:text="${bean.createdDate}"></th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr th:each="post : ${bean.posts}">
-												<td th:text="${post.id}"></td>
-												<td><a th:href="@{/post/view/{postId} (postId=${post.id})}"> <span th:text="${post.title}"></span> <span th:if="${post.getLikesCount() > 0}"
-														class="badge badge-pill badge-info pr-2 pl-2 pt-1 ml-2" id="postLikeCount"><i class="far fa-thumbs-up mr-1"></i><span th:text="${post.getLikesCount()}"></span></span> <span
-														class="badge badge-pill badge-secondary pr-2 pl-2 pt-1" th:if="${post.getComments().size() > 0}"><i class=" far fa-commentmr-1"></i><span th:text="${post.getComments().size()}"></span></span>
-												</a></td>
+												<td><a th:href="@{/post/view/{postId} (postId=${post.id})}"> <span th:text="${post.title}" class="text-truncate d-inline-block" style="max-width: 100%"></span></a> <span
+													class="badge badge-pill badge-info pr-2 pl-2 pt-1 ml-2" th:if="${post.viewCount > 0}"><i class="far fa-eye mr-1"></i><span th:text="${post.viewCount}"></span></span> <span
+													th:if="${post.getLikesCount() > 0}" class="badge badge-pill badge-info pr-2 pl-2 pt-1" id="postLikeCount"><i class="far fa-thumbs-up mr-1"></i><span
+														th:text="${post.getLikesCount()}"></span></span> <span class="badge badge-pill badge-secondary pr-2 pl-2 pt-1" th:if="${post.getComments().size() > 0}"><i class=" far fa-comment mr-1"></i><span
+														th:text="${post.getComments().size()}"></span></span></td>
 												<td th:if="${bean.user == null}" th:text="${post.user.username}"></td>
 												<td th:if="${bean.user != null}"><a id="btnMessage" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <span th:text="${post.user.username}"></span>
 												</a>
@@ -44,7 +42,6 @@
 															th:text="${bean.btnMessageSend}"></span>
 														</a>
 													</div></td>
-												<td th:text="${post.viewCount}"></td>
 												<td th:if="${bean.user == null}" th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd')}"></td>
 												<td th:if="${bean.user != null and bean.user.getLanguageStatus().getString().equals('KOREAN')}" th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd')}"></td>
 												<td th:if="${bean.user != null and bean.user.getLanguageStatus().getString().equals('DEUTSCH')}" th:text="${#temporals.format(post.createdDate, 'dd-MM-yyyy')}"></td>
